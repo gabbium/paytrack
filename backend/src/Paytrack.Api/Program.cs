@@ -2,7 +2,6 @@ using Paytrack.Api;
 using Paytrack.Api.Infrastructure;
 using Paytrack.Application;
 using Paytrack.Infrastructure;
-using Paytrack.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,10 +50,5 @@ app.MapHealthChecks("api/health", new HealthCheckOptions
 app.Map("/", () => Results.Redirect("/api"));
 
 app.MapEndpoints(Assembly.GetExecutingAssembly());
-
-if (app.Environment.IsDevelopment())
-{
-    await app.Services.InitializeDatabaseAsync();
-}
 
 await app.RunAsync();

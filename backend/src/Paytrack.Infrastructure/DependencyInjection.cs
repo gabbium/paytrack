@@ -11,8 +11,6 @@ public static class DependencyInjection
             options.UseNpgsql(connectionString);
         });
 
-        services.AddScoped<AppDbContextInitializer>();
-
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<AppDbContext>());
 
         services.AddSingleton(TimeProvider.System);
