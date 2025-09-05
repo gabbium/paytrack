@@ -1,17 +1,25 @@
-﻿namespace Paytrack.Api.Infrastructure;
+﻿using Paytrack.Domain.Exceptions;
+
+namespace Paytrack.Api.Infrastructure;
 
 public sealed class CustomExceptionHandler : IExceptionHandler
 {
     private readonly Dictionary<Type, Func<HttpContext, Exception, CancellationToken, Task>> _exceptionHandlers = new()
     {
-        { typeof(BadHttpRequestException), HandleBadHttpRequestException }
+        { typeof(BadHttpRequestException), HandleBadHttpRequestException },
+        { typeof(DomainRuleViolation), HandleDomainRuleViolationException }
     };
 
-    public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
+    public async ValueTask<bool> TryHandleAsync(
+        HttpContext httpContext,
+        Exception exception,
+        CancellationToken cancellationToken)
     {
         var exceptionType = exception.GetType();
 
-        if (_exceptionHandlers.TryGetValue(exceptionType, out Func<HttpContext, Exception, CancellationToken, Task>? value))
+        if (_exceptionHandlers.TryGetValue(
+            exceptionType,
+            out Func<HttpContext, Exception, CancellationToken, Task>? value))
         {
             await value.Invoke(httpContext, exception, cancellationToken);
             return true;
@@ -32,16 +40,39 @@ public sealed class CustomExceptionHandler : IExceptionHandler
         return true;
     }
 
-    private static async Task HandleBadHttpRequestException(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
+    private static async Task HandleBadHttpRequestException(
+        HttpContext httpContext,
+        Exception exception,
+        CancellationToken cancellationToken)
     {
-        var badHttpRequestException = (BadHttpRequestException)exception;
+        var ex = (BadHttpRequestException)exception;
 
         var problemDetails = new ProblemDetails
         {
             Status = StatusCodes.Status400BadRequest,
             Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
             Title = "Bad Request",
-            Detail = badHttpRequestException.InnerException?.Message ?? badHttpRequestException.Message
+            Detail = ex.InnerException?.Message ?? ex.Message
+        };
+
+        httpContext.Response.StatusCode = problemDetails.Status.Value;
+
+        await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
+    }
+
+    private static async Task HandleDomainRuleViolationException(
+        HttpContext httpContext,
+        Exception exception,
+        CancellationToken cancellationToken)
+    {
+        var ex = (DomainRuleViolation)exception;
+
+        var problemDetails = new ProblemDetails
+        {
+            Status = StatusCodes.Status400BadRequest,
+            Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+            Title = ex.Code,
+            Detail = ex.Message
         };
 
         httpContext.Response.StatusCode = problemDetails.Status.Value;
