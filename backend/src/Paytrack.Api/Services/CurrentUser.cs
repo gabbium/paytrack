@@ -2,7 +2,7 @@
 
 namespace Paytrack.Api.Services;
 
-public sealed class CurrentUser(IHttpContextAccessor httpContextAccessor) : ICurrentUser
+internal sealed class CurrentUser(IHttpContextAccessor httpContextAccessor) : ICurrentUser
 {
     private ClaimsPrincipal? User => httpContextAccessor.HttpContext?.User;
 
@@ -11,9 +11,9 @@ public sealed class CurrentUser(IHttpContextAccessor httpContextAccessor) : ICur
     public Guid UserId => User.GetUserId();
 }
 
-public static class ClaimsPrincipalExtensions
+internal static class Extensions
 {
-    public static Guid GetUserId(this ClaimsPrincipal? principal)
+    internal static Guid GetUserId(this ClaimsPrincipal? principal)
     {
         if (principal is null) return Guid.Empty;
 

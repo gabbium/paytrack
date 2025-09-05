@@ -11,7 +11,12 @@ public sealed class Movement : BaseAuditableEntity, IAggregateRoot
     public string? Description { get; private set; }
     public DateTimeOffset OccurredOn { get; private set; }
 
-    public Movement(Guid userId, MovementKind kind, decimal amount, DateTimeOffset occurredOn, string? description = null)
+    public Movement(
+        Guid userId,
+        MovementKind kind,
+        decimal amount,
+        DateTimeOffset occurredOn,
+        string? description = null)
     {
         if (userId == Guid.Empty)
             throw new DomainRuleViolation("UserId is required", "The UserId cannot be empty.");

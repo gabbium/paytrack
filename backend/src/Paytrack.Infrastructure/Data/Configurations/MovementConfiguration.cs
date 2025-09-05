@@ -2,7 +2,7 @@
 
 namespace Paytrack.Infrastructure.Data.Configurations;
 
-public sealed class MovementConfiguration : IEntityTypeConfiguration<Movement>
+internal sealed class MovementConfiguration : IEntityTypeConfiguration<Movement>
 {
     public void Configure(EntityTypeBuilder<Movement> builder)
     {

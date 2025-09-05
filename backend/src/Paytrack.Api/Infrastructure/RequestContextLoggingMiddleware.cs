@@ -1,6 +1,6 @@
 ﻿namespace Paytrack.Api.Infrastructure;
 
-public sealed class RequestContextLoggingMiddleware(RequestDelegate next)
+internal sealed class RequestContextLoggingMiddleware(RequestDelegate next)
 {
     private const string CorrelationIdHeaderName = "Correlation-Id";
 

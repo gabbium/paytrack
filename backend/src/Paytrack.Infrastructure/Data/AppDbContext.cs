@@ -3,8 +3,12 @@ using Paytrack.Domain.Entities;
 
 namespace Paytrack.Infrastructure.Data;
 
-public sealed class AppDbContext(DbContextOptions<AppDbContext> options, ICurrentUser currentUser) : DbContext(options), IUnitOfWork
+internal sealed class AppDbContext(
+    DbContextOptions<AppDbContext> options,
+    ICurrentUser currentUser) : DbContext(options), IUnitOfWork
 {
+    private readonly Guid _currentUserId = currentUser.UserId;
+
     public DbSet<User> Users => Set<User>();
     public DbSet<Movement> Movements => Set<Movement>();
 
@@ -13,7 +17,7 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options, ICurren
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
         modelBuilder.Entity<Movement>()
-            .HasQueryFilter(m => m.UserId == currentUser.UserId);
+            .HasQueryFilter(m => m.UserId == _currentUserId);
 
         base.OnModelCreating(modelBuilder);
     }

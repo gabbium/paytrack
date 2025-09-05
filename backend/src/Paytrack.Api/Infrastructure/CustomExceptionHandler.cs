@@ -2,7 +2,7 @@
 
 namespace Paytrack.Api.Infrastructure;
 
-public sealed class CustomExceptionHandler : IExceptionHandler
+internal sealed class CustomExceptionHandler : IExceptionHandler
 {
     private readonly Dictionary<Type, Func<HttpContext, Exception, CancellationToken, Task>> _exceptionHandlers = new()
     {

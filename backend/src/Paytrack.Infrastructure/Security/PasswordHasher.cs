@@ -2,7 +2,7 @@
 
 namespace Paytrack.Infrastructure.Security;
 
-public sealed class PasswordHasher : IPasswordHasher
+internal sealed class PasswordHasher : IPasswordHasher
 {
     public string Hash(string password)
     {

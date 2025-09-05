@@ -3,7 +3,7 @@ using Paytrack.Domain.Entities;
 
 namespace Paytrack.Infrastructure.Security;
 
-public sealed class TokenService(IOptions<JwtOptions> jwtOptions) : ITokenService
+internal sealed class TokenService(IOptions<JwtOptions> jwtOptions) : ITokenService
 {
     private readonly JwtOptions _jwtOptions = jwtOptions.Value;
 
