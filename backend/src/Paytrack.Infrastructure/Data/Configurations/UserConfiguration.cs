@@ -38,12 +38,12 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
                 .IsRequired();
         });
 
-        builder.Property(m => m.CreatedOn);
+        builder.Property(u => u.CreatedOn);
 
-        builder.Property(m => m.CreatedBy);
+        builder.Property(u => u.CreatedBy);
 
-        builder.Property(m => m.LastModifiedOn);
+        builder.Property(u => u.LastModifiedOn);
 
-        builder.Property(m => m.LastModifiedBy);
+        builder.Property(u => u.LastModifiedBy);
     }
 }

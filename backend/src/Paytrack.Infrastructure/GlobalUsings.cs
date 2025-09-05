@@ -1,15 +1,4 @@
-﻿global using System.Data.Common;
-global using System.Reflection;
-global using CleanArch;
-global using Microsoft.EntityFrameworkCore;
-global using Microsoft.EntityFrameworkCore.ChangeTracking;
-global using Microsoft.EntityFrameworkCore.Diagnostics;
-global using Microsoft.EntityFrameworkCore.Infrastructure;
-global using Microsoft.EntityFrameworkCore.Metadata.Builders;
-global using Microsoft.EntityFrameworkCore.Migrations;
-global using Microsoft.Extensions.DependencyInjection;
-global using Microsoft.Extensions.Options;
-global using System.IdentityModel.Tokens.Jwt;
+﻿global using System.IdentityModel.Tokens.Jwt;
 global using System.Reflection;
 global using System.Security.Claims;
 global using System.Text;

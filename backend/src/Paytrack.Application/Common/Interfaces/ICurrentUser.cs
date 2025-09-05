@@ -2,7 +2,7 @@
 
 public interface ICurrentUser
 {
-    bool IsAuthenticated { get; }
+    bool HasUser { get; }
     Guid UserId { get; }
 }
 

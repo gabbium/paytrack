@@ -21,9 +21,9 @@ namespace Paytrack.Infrastructure.Data.Migrations
                     currency = table.Column<string>(type: "character varying(3)", maxLength: 3, nullable: false),
                     time_zone = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
                     created_on = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    created_by = table.Column<string>(type: "text", nullable: true),
+                    created_by = table.Column<Guid>(type: "uuid", nullable: false),
                     last_modified_on = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    last_modified_by = table.Column<string>(type: "text", nullable: true)
+                    last_modified_by = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {

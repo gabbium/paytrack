@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-using Paytrack.Domain.Enums;
+﻿using Paytrack.Domain.Enums;
 
 #nullable disable
 
@@ -28,9 +26,9 @@ namespace Paytrack.Infrastructure.Data.Migrations
                     description = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
                     occurred_on = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     created_on = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    created_by = table.Column<string>(type: "text", nullable: true),
+                    created_by = table.Column<Guid>(type: "uuid", nullable: false),
                     last_modified_on = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    last_modified_by = table.Column<string>(type: "text", nullable: true)
+                    last_modified_by = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,58 +40,6 @@ namespace Paytrack.Infrastructure.Data.Migrations
                 name: "ix_movements_user_id",
                 table: "movements",
                 column: "user_id");
-
-            migrationBuilder.Sql("""
-                ALTER TABLE movements ENABLE ROW LEVEL SECURITY;
-                """);
-
-            migrationBuilder.Sql("""
-                CREATE POLICY movements_select_policy
-                ON movements
-                FOR SELECT
-                TO app_runtime
-                USING (
-                  current_user_id() IS NOT NULL
-                  AND user_id = current_user_id()::uuid
-                );
-                """);
-
-            migrationBuilder.Sql("""
-                CREATE POLICY movements_insert_policy
-                ON movements
-                FOR INSERT
-                TO app_runtime
-                WITH CHECK (
-                  current_user_id() IS NOT NULL
-                  AND user_id = current_user_id()::uuid
-                );
-                """);
-
-            migrationBuilder.Sql("""
-                CREATE POLICY movements_update_policy
-                ON movements
-                FOR UPDATE
-                TO app_runtime
-                USING (
-                  current_user_id() IS NOT NULL
-                  AND user_id = current_user_id()::uuid
-                )
-                WITH CHECK (
-                  current_user_id() IS NOT NULL
-                  AND user_id = current_user_id()::uuid
-                );
-                """);
-
-            migrationBuilder.Sql("""
-                CREATE POLICY movements_delete_policy
-                ON movements
-                FOR DELETE
-                TO app_runtime
-                USING (
-                  current_user_id() IS NOT NULL
-                  AND user_id = current_user_id()::uuid
-                );
-                """);
         }
 
         /// <inheritdoc />

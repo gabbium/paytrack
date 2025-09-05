@@ -11,13 +11,10 @@ public static class DependencyInjection
     public static void AddInfrastructureServices(this IServiceCollection services, string? connectionString)
     {
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
-        services.AddScoped<IDbConnectionInterceptor, CurrentUserInterceptor>();
 
         services.AddDbContext<AppDbContext>((sp, options) =>
         {
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
-            options.AddInterceptors(sp.GetServices<IDbConnectionInterceptor>());
-
             options.UseNpgsql(connectionString, options =>
             {
                 options.MapEnum<MovementKind>();

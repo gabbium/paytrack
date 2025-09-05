@@ -21,7 +21,7 @@ public sealed class AuditableEntityInterceptor(ICurrentUser currentUser, TimePro
         if (context == null) return;
 
         var utcNow = dateTime.GetUtcNow();
-        var actorId = currentUser.IsAuthenticated ? currentUser.UserId.ToString() : null;
+        var actorId = currentUser.UserId;
 
         var entries = context.ChangeTracker
             .Entries<BaseAuditableEntity>()

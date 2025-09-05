@@ -31,9 +31,9 @@ public sealed class MovementConfiguration : IEntityTypeConfiguration<Movement>
         builder.Property(m => m.CreatedOn);
 
         builder.Property(m => m.CreatedBy);
-        
+
         builder.Property(m => m.LastModifiedOn);
-        
+
         builder.Property(m => m.LastModifiedBy);
     }
 }

@@ -4,26 +4,22 @@ namespace Paytrack.Api.Services;
 
 public sealed class CurrentUser(IHttpContextAccessor httpContextAccessor) : ICurrentUser
 {
-    private ClaimsPrincipal User =>
-        httpContextAccessor.HttpContext?.User
-        ?? throw new UnauthorizedAccessException("HTTP context is not available");
+    private ClaimsPrincipal? User => httpContextAccessor.HttpContext?.User;
 
-    public bool IsAuthenticated =>
-        httpContextAccessor.HttpContext?.User.Identity?.IsAuthenticated == true;
+    public bool HasUser => User?.Identity?.IsAuthenticated == true;
 
     public Guid UserId => User.GetUserId();
 }
 
 public static class ClaimsPrincipalExtensions
 {
-    public static Guid GetUserId(this ClaimsPrincipal principal)
+    public static Guid GetUserId(this ClaimsPrincipal? principal)
     {
+        if (principal is null) return Guid.Empty;
+
         var value = principal.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        if (Guid.TryParse(value, out var userId))
-            return userId;
-
-        throw new UnauthorizedAccessException("Claim 'sub' (user id) is missing or invalid");
+        return Guid.TryParse(value, out var userId) ? userId : Guid.Empty;
     }
 }
 
