@@ -31,7 +31,7 @@ namespace Paytrack.Infrastructure.Data.Migrations
                         .HasColumnType("numeric(18,2)")
                         .HasColumnName("amount");
 
-                    b.Property<Guid>("CreatedBy")
+                    b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uuid")
                         .HasColumnName("created_by");
 
@@ -48,7 +48,7 @@ namespace Paytrack.Infrastructure.Data.Migrations
                         .HasColumnType("movement_kind")
                         .HasColumnName("kind");
 
-                    b.Property<Guid>("LastModifiedBy")
+                    b.Property<Guid?>("LastModifiedBy")
                         .HasColumnType("uuid")
                         .HasColumnName("last_modified_by");
 
@@ -83,7 +83,7 @@ namespace Paytrack.Infrastructure.Data.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<Guid>("CreatedBy")
+                    b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uuid")
                         .HasColumnName("created_by");
 
@@ -97,7 +97,7 @@ namespace Paytrack.Infrastructure.Data.Migrations
                         .HasColumnType("citext")
                         .HasColumnName("email");
 
-                    b.Property<Guid>("LastModifiedBy")
+                    b.Property<Guid?>("LastModifiedBy")
                         .HasColumnType("uuid")
                         .HasColumnName("last_modified_by");
 

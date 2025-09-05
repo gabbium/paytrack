@@ -28,7 +28,7 @@ public static class DependencyInjection
 
         services.AddOpenApiDocument((configure, sp) =>
         {
-            configure.Title = "PayTrack.Identity.API";
+            configure.Title = "PayTrack Api";
 
             configure.AddSecurity("Bearer", [], new OpenApiSecurityScheme
             {
