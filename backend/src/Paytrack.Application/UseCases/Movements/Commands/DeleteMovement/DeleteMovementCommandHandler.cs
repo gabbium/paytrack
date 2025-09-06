@@ -1,4 +1,5 @@
-﻿using Paytrack.Domain.Repositories;
+﻿using Paytrack.Domain.Events;
+using Paytrack.Domain.Repositories;
 using Paytrack.Domain.Resources;
 
 namespace Paytrack.Application.UseCases.Movements.Commands.DeleteMovement;
@@ -16,6 +17,8 @@ internal sealed class DeleteMovementCommandHandler(
 
         if (movement is null)
             return Error.NotFound(Resource.Movement_NotFound);
+
+        movement.AddDomainEvent(MovementDeletedEvent.FromDomain(movement));
 
         await movementRepository.RemoveAsync(movement, cancellationToken);
 

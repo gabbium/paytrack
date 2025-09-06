@@ -9,7 +9,7 @@ public static class DependencyInjection
 {
     public static void AddWebServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<ICurrentUser, CurrentUser>();
+        services.AddScoped<IOperationContext, OperationContext>();
 
         services.AddHttpContextAccessor();
 

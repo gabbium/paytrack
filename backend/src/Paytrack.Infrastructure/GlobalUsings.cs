@@ -2,6 +2,8 @@
 global using System.Reflection;
 global using System.Security.Claims;
 global using System.Text;
+global using System.Text.Json;
+global using System.Text.Json.Serialization;
 global using CleanArch;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.ChangeTracking;

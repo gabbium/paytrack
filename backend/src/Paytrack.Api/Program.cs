@@ -22,7 +22,7 @@ builder.Services.AddWebServices(builder.Configuration);
 
 var app = builder.Build();
 
-app.UseMiddleware<RequestContextLoggingMiddleware>();
+app.UseMiddleware<OperationContextMiddleware>();
 
 app.UseSerilogRequestLogging(options =>
 {

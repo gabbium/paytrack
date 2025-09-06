@@ -1,6 +1,7 @@
 ﻿using Paytrack.Application.Common.Interfaces;
 using Paytrack.Application.UseCases.Users.Contracts;
 using Paytrack.Domain.Entities;
+using Paytrack.Domain.Events;
 using Paytrack.Domain.Repositories;
 using Paytrack.Domain.Resources;
 
@@ -23,6 +24,8 @@ internal sealed class RegisterUserCommandHandler(
         var passwordHash = passwordHasher.Hash(command.Password);
 
         var user = new User(command.Email, passwordHash);
+
+        user.AddDomainEvent(UserRegisteredEvent.FromDomain(user));
 
         await userRepository.AddAsync(user, cancellationToken);
 

@@ -1,12 +1,13 @@
 ﻿using Paytrack.Application.Common.Interfaces;
 using Paytrack.Application.UseCases.Movements.Contracts;
 using Paytrack.Domain.Entities;
+using Paytrack.Domain.Events;
 using Paytrack.Domain.Repositories;
 
 namespace Paytrack.Application.UseCases.Movements.Commands.CreateMovement;
 
 internal sealed class CreateMovementCommandHandler(
-    ICurrentUser currentUser,
+    IOperationContext operationContext,
     IMovementRepository movementRepository,
     IUnitOfWork unitOfWork)
     : ICommandHandler<CreateMovementCommand, MovementResponse>
@@ -16,11 +17,13 @@ internal sealed class CreateMovementCommandHandler(
         CancellationToken cancellationToken = default)
     {
         var movement = new Movement(
-            currentUser.UserId,
+            operationContext.UserIdOrEmpty,
             command.Kind,
             command.Amount,
             command.Description,
             command.OccurredOn);
+
+        movement.AddDomainEvent(MovementCreatedEvent.FromDomain(movement));
 
         await movementRepository.AddAsync(movement, cancellationToken);
 

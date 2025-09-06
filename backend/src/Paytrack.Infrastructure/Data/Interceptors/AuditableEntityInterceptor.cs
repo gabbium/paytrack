@@ -3,7 +3,7 @@
 namespace Paytrack.Infrastructure.Data.Interceptors;
 
 internal sealed class AuditableEntityInterceptor(
-    ICurrentUser currentUser,
+    IOperationContext operationContext,
     TimeProvider dateTime) : SaveChangesInterceptor
 {
     public override InterceptionResult<int> SavingChanges(
@@ -28,7 +28,6 @@ internal sealed class AuditableEntityInterceptor(
         if (context == null) return;
 
         var utcNow = dateTime.GetUtcNow();
-        var actorId = currentUser.HasUser ? currentUser.UserId : (Guid?)null;
 
         var entries = context.ChangeTracker
             .Entries<BaseAuditableEntity>()
@@ -39,11 +38,11 @@ internal sealed class AuditableEntityInterceptor(
         {
             if (entry.State == EntityState.Added)
             {
-                entry.Entity.CreatedBy = actorId;
+                entry.Entity.CreatedBy = operationContext.UserId;
                 entry.Entity.CreatedOn = utcNow;
             }
 
-            entry.Entity.LastModifiedBy = actorId;
+            entry.Entity.LastModifiedBy = operationContext.UserId;
             entry.Entity.LastModifiedOn = utcNow;
         }
     }

@@ -1,4 +1,5 @@
 ﻿using Paytrack.Application.UseCases.Movements.Contracts;
+using Paytrack.Domain.Events;
 using Paytrack.Domain.Repositories;
 using Paytrack.Domain.Resources;
 
@@ -22,6 +23,8 @@ internal sealed class UpdateMovementCommandHandler(
         movement.ChangeAmount(command.Amount);
         movement.ChangeDescription(command.Description);
         movement.ChangeOccurredOn(command.OccurredOn);
+
+        movement.AddDomainEvent(MovementUpdatedEvent.FromDomain(movement));
 
         await movementRepository.UpdateAsync(movement, cancellationToken);
 
