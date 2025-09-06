@@ -4,8 +4,8 @@ using Paytrack.Domain.Enums;
 namespace Paytrack.Application.UseCases.Movements.Commands.CreateMovement;
 
 public sealed record CreateMovementCommand(
-    MovementKind Kind, 
+    MovementKind Kind,
     decimal Amount,
     DateTimeOffset OccurredOn,
-    string? Description) 
+    string? Description)
     : ICommand<MovementResponse>;

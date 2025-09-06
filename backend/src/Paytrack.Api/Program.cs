@@ -11,7 +11,7 @@ builder.Host.UseSerilog((_, config) =>
        .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder()
            .WithDefaultDestructurers()
            .WithDestructurers([new DbUpdateExceptionDestructurer()]))
-       .Destructure.With(new SensitiveDataDestructurer());
+           .Destructure.With(new SensitiveDataDestructurer());
 });
 
 builder.Services.AddApplicationServices();

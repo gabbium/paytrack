@@ -6,7 +6,7 @@ namespace Paytrack.Infrastructure.Data.Queries;
 internal sealed class ListMovementsQueryService(AppDbContext context) : IListMovementsQueryService
 {
     public async Task<PaginatedList<MovementResponse>> ListAsync(
-        ListMovementsQuery query, 
+        ListMovementsQuery query,
         CancellationToken cancellationToken = default)
     {
         var queryable = context.Movements

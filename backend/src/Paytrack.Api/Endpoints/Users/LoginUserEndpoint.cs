@@ -20,7 +20,7 @@ internal sealed class LoginUserEndpoint : IEndpoint
         CancellationToken cancellationToken)
     {
         var result = await mediator.SendAsync(command, cancellationToken);
-        
+
         return result.IsSuccess
             ? Results.Ok(result.Value)
             : CustomResults.Problem(result);

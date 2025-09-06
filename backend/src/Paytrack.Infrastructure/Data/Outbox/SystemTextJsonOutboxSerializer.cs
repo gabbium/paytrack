@@ -2,15 +2,15 @@
 
 public sealed class SystemTextJsonOutboxSerializer : IOutboxSerializer
 {
-    private static readonly JsonSerializerOptions Options = new()
+    private static readonly JsonSerializerOptions s_options = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         WriteIndented = false,
-        Converters = 
-        { 
-            new JsonStringEnumConverter() 
+        Converters =
+        {
+            new JsonStringEnumConverter()
         }
     };
 
-    public string Serialize(object value) => JsonSerializer.Serialize(value, Options);
+    public string Serialize(object value) => JsonSerializer.Serialize(value, s_options);
 }

@@ -3,6 +3,6 @@
 namespace Paytrack.Application.UseCases.Movements.Queries.ListMovements;
 
 public sealed record ListMovementsQuery(
-    int PageNumber, 
-    int PageSize) 
+    int PageNumber,
+    int PageSize)
     : IQuery<PaginatedList<MovementResponse>>;

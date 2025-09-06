@@ -4,7 +4,7 @@ namespace Paytrack.Infrastructure.Data.Outbox;
 
 internal sealed class OutboxInterceptor(
     IOperationContext operationContext,
-    IOutboxSerializer outboxSerializer) 
+    IOutboxSerializer outboxSerializer)
     : SaveChangesInterceptor
 {
     public override InterceptionResult<int> SavingChanges(

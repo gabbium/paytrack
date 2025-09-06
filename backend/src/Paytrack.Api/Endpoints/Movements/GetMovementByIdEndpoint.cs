@@ -19,9 +19,9 @@ internal sealed class GetMovementByIdEndpoint : IEndpoint
         CancellationToken cancellationToken)
     {
         var query = new GetMovementByIdQuery(id);
-        
+
         var result = await mediator.SendAsync(query, cancellationToken);
-        
+
         return result.IsSuccess
             ? Results.Ok(result.Value)
             : CustomResults.Problem(result);

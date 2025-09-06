@@ -3,8 +3,8 @@
 namespace Paytrack.Domain.Events;
 
 public sealed class MovementDeletedEvent(
-    Guid id, 
-    Guid userId) 
+    Guid id,
+    Guid userId)
     : DomainEventBase
 {
     public Guid Id { get; } = id;

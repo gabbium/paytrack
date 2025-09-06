@@ -9,7 +9,7 @@ public sealed class MovementUpdatedEvent(
     MovementKind kind,
     decimal amount,
     string? description,
-    DateTimeOffset occurredOn) 
+    DateTimeOffset occurredOn)
     : DomainEventBase
 {
     public Guid Id { get; } = id;

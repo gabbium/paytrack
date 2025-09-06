@@ -10,7 +10,7 @@ internal sealed class DeleteMovementCommandHandler(
     : ICommandHandler<DeleteMovementCommand>
 {
     public async Task<Result> HandleAsync(
-        DeleteMovementCommand command, 
+        DeleteMovementCommand command,
         CancellationToken cancellationToken = default)
     {
         var movement = await movementRepository.GetByIdAsync(command.Id, cancellationToken);

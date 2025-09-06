@@ -5,6 +5,6 @@ namespace Paytrack.Application.UseCases.Movements.Queries.ListMovements;
 public interface IListMovementsQueryService
 {
     Task<PaginatedList<MovementResponse>> ListAsync(
-        ListMovementsQuery query, 
+        ListMovementsQuery query,
         CancellationToken cancellationToken = default);
 }

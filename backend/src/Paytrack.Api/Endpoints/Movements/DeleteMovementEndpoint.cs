@@ -18,9 +18,9 @@ internal sealed class DeleteMovementEndpoint : IEndpoint
         CancellationToken cancellationToken)
     {
         var command = new DeleteMovementCommand(id);
-        
+
         var result = await mediator.SendAsync(command, cancellationToken);
-        
+
         return result.IsSuccess
             ? Results.NoContent()
             : CustomResults.Problem(result);

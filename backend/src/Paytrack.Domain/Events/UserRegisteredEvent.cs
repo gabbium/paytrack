@@ -6,7 +6,7 @@ public sealed class UserRegisteredEvent(
     Guid userId,
     string email,
     string currency,
-    string timeZone) 
+    string timeZone)
     : DomainEventBase
 {
     public Guid UserId { get; } = userId;

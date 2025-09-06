@@ -5,11 +5,11 @@ using Paytrack.Domain.Resources;
 namespace Paytrack.Application.UseCases.Movements.Queries.GetMovementById;
 
 internal sealed class GetMovementByIdQueryHandler(
-    IMovementRepository movementRepository) 
+    IMovementRepository movementRepository)
     : IQueryHandler<GetMovementByIdQuery, MovementResponse>
 {
     public async Task<Result<MovementResponse>> HandleAsync(
-        GetMovementByIdQuery query, 
+        GetMovementByIdQuery query,
         CancellationToken cancellationToken = default)
     {
         var movement = await movementRepository.GetByIdAsync(query.Id, cancellationToken);

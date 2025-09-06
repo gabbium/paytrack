@@ -21,7 +21,7 @@ internal sealed class UpdateMovementEndpoint : IEndpoint
         UpdateMovementCommand command,
         CancellationToken cancellationToken)
     {
-        if (id != command.Id) 
+        if (id != command.Id)
             return CustomResults.Problem(Error.Validation(Resource.Movement_Id_NotEmpty));
 
         var result = await mediator.SendAsync(command, cancellationToken);

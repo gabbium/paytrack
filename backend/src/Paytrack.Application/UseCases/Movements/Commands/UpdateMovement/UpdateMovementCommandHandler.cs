@@ -11,7 +11,7 @@ internal sealed class UpdateMovementCommandHandler(
     : ICommandHandler<UpdateMovementCommand, MovementResponse>
 {
     public async Task<Result<MovementResponse>> HandleAsync(
-        UpdateMovementCommand command, 
+        UpdateMovementCommand command,
         CancellationToken cancellationToken = default)
     {
         var movement = await movementRepository.GetByIdAsync(command.Id, cancellationToken);
