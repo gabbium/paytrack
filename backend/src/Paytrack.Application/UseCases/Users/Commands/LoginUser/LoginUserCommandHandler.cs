@@ -25,16 +25,6 @@ internal sealed class LoginUserCommandHandler(
 
         var accessToken = tokenService.CreateAccessToken(user);
 
-        return new AuthResponse
-        {
-            User = new UserResponse
-            {
-                Id = user.Id,
-                Email = user.Email,
-                Currency = user.Preferences.Currency,
-                TimeZone = user.Preferences.TimeZone
-            },
-            AccessToken = accessToken,
-        };
+        return AuthResponse.FromDomain(user, accessToken);
     }
 }

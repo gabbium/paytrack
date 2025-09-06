@@ -9,7 +9,7 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
         builder.ToTable(t =>
         {
             t.HasCheckConstraint(
-                "ck_user_currency_iso", 
+                "ck_user_currency_iso",
                 "char_length(currency) = 3 AND currency = upper(currency)");
         });
 

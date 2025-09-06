@@ -32,7 +32,7 @@ internal sealed class AuditableEntityInterceptor(
 
         var entries = context.ChangeTracker
             .Entries<BaseAuditableEntity>()
-            .Where(entry => entry.State is EntityState.Added or EntityState.Modified 
+            .Where(entry => entry.State is EntityState.Added or EntityState.Modified
                 || entry.HasChangedOwnedEntities());
 
         foreach (var entry in entries)
@@ -55,6 +55,6 @@ internal static class Extensions
         entry.References.Any(r =>
             r.TargetEntry != null &&
             r.TargetEntry.Metadata.IsOwned() &&
-            (r.TargetEntry.State == EntityState.Added 
+            (r.TargetEntry.State == EntityState.Added
             || r.TargetEntry.State == EntityState.Modified));
 }

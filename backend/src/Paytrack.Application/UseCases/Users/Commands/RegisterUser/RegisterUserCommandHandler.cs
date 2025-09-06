@@ -10,7 +10,7 @@ internal sealed class RegisterUserCommandHandler(
     IUserRepository userRepository,
     IPasswordHasher passwordHasher,
     IUnitOfWork unitOfWork,
-    ITokenService tokenService) 
+    ITokenService tokenService)
     : ICommandHandler<RegisterUserCommand, AuthResponse>
 {
     public async Task<Result<AuthResponse>> HandleAsync(
@@ -30,16 +30,6 @@ internal sealed class RegisterUserCommandHandler(
 
         var accessToken = tokenService.CreateAccessToken(user);
 
-        return new AuthResponse
-        {
-            User = new UserResponse
-            {
-                Id = user.Id,
-                Email = user.Email,
-                Currency = user.Preferences.Currency,
-                TimeZone = user.Preferences.TimeZone
-            },
-            AccessToken = accessToken,
-        };
+        return AuthResponse.FromDomain(user, accessToken);
     }
 }

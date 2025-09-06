@@ -32,7 +32,7 @@ internal sealed class Mediator(IServiceProvider serviceProvider) : IMediator
         foreach (var handler in handlers)
         {
             var method = handlerType.GetMethod(nameof(IDomainEventHandler<IDomainEvent>.HandleAsync))!;
-            await(Task)method.Invoke(handler, [@event, cancellationToken])!;
+            await (Task)method.Invoke(handler, [@event, cancellationToken])!;
         }
     }
 }

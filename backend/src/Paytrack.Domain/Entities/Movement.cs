@@ -15,8 +15,8 @@ public sealed class Movement : BaseAuditableEntity
         Guid userId,
         MovementKind kind,
         decimal amount,
-        DateTimeOffset occurredOn,
-        string? description = null)
+        string? description,
+        DateTimeOffset occurredOn)
     {
         if (userId == Guid.Empty)
             throw new DomainException(MovementErrors.EmptyUserId);
@@ -27,13 +27,13 @@ public sealed class Movement : BaseAuditableEntity
         UserId = userId;
         Kind = kind;
         Amount = amount;
-        OccurredOn = occurredOn;
         Description = description;
+        OccurredOn = occurredOn;
     }
 
-    public void UpdateDescription(string? description)
+    public void ChangeKind(MovementKind newKind)
     {
-        Description = description;
+        Kind = newKind;
     }
 
     public void ChangeAmount(decimal newAmount)
@@ -42,5 +42,15 @@ public sealed class Movement : BaseAuditableEntity
             throw new DomainException(MovementErrors.InvalidAmount);
 
         Amount = newAmount;
+    }
+
+    public void ChangeDescription(string? newDescription)
+    {
+        Description = newDescription;
+    }
+
+    public void ChangeOccurredOn(DateTimeOffset newOccurredOn)
+    {
+        OccurredOn = newOccurredOn;
     }
 }
