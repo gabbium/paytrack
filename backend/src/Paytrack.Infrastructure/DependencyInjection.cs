@@ -33,6 +33,7 @@ public static class DependencyInjection
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<AppDbContext>());
 
         services.AddSingleton(TimeProvider.System);
+
         services.AddScoped<IMediator, Mediator>();
 
         services.AddSingleton<IPasswordHasher, PasswordHasher>();
