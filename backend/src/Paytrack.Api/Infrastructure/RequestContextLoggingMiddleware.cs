@@ -6,8 +6,19 @@ internal sealed class RequestContextLoggingMiddleware(RequestDelegate next)
 
     public Task Invoke(HttpContext context)
     {
-        using (LogContext.PushProperty("CorrelationId", GetCorrelationId(context)))
+        var correlationId = GetCorrelationId(context);
+        var userId = GetUserId(context);
+
+        using (LogContext.PushProperty("CorrelationId", correlationId))
         {
+            if (!string.IsNullOrEmpty(userId))
+            {
+                using (LogContext.PushProperty("UserId", userId))
+                {
+                    return next.Invoke(context);
+                }
+            }
+
             return next.Invoke(context);
         }
     }
@@ -19,5 +30,10 @@ internal sealed class RequestContextLoggingMiddleware(RequestDelegate next)
             out StringValues correlationId);
 
         return correlationId.FirstOrDefault() ?? context.TraceIdentifier;
+    }
+
+    private static string? GetUserId(HttpContext context)
+    {
+        return context.User?.FindFirstValue(ClaimTypes.NameIdentifier);
     }
 }

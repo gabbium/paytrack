@@ -21,10 +21,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paytrack.Application.UnitTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paytrack.Api.FunctionalTests", "tests\Paytrack.Api.FunctionalTests\Paytrack.Api.FunctionalTests.csproj", "{95983AF3-BC7F-4004-BC65-76BC747C34D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArch", "src\CleanArch\CleanArch.csproj", "{71C41C61-1073-4B18-B5C7-709602823AF8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArch.AspNetCore", "src\CleanArch.AspNetCore\CleanArch.AspNetCore.csproj", "{C66A2E9F-A6D7-4C72-B153-EE5D68F72B45}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,14 +55,6 @@ Global
 		{95983AF3-BC7F-4004-BC65-76BC747C34D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95983AF3-BC7F-4004-BC65-76BC747C34D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95983AF3-BC7F-4004-BC65-76BC747C34D7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{71C41C61-1073-4B18-B5C7-709602823AF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{71C41C61-1073-4B18-B5C7-709602823AF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{71C41C61-1073-4B18-B5C7-709602823AF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{71C41C61-1073-4B18-B5C7-709602823AF8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C66A2E9F-A6D7-4C72-B153-EE5D68F72B45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C66A2E9F-A6D7-4C72-B153-EE5D68F72B45}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C66A2E9F-A6D7-4C72-B153-EE5D68F72B45}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C66A2E9F-A6D7-4C72-B153-EE5D68F72B45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,8 +67,6 @@ Global
 		{0B0AAD2E-6256-40FF-9A4F-1C749778D7DF} = {4145D950-DCFC-4C21-A6AE-26A6F3B30D77}
 		{F69955D5-7FC4-4165-9C71-FF92E181D781} = {4145D950-DCFC-4C21-A6AE-26A6F3B30D77}
 		{95983AF3-BC7F-4004-BC65-76BC747C34D7} = {4145D950-DCFC-4C21-A6AE-26A6F3B30D77}
-		{71C41C61-1073-4B18-B5C7-709602823AF8} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{C66A2E9F-A6D7-4C72-B153-EE5D68F72B45} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AF47A390-083E-4DA3-8217-FFDEFFB69AFC}
