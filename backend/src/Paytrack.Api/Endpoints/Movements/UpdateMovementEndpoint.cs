@@ -1,5 +1,6 @@
 ﻿using Paytrack.Application.UseCases.Movements.Commands.UpdateMovement;
 using Paytrack.Application.UseCases.Movements.Contracts;
+using Paytrack.Domain.Resources;
 
 namespace Paytrack.Api.Endpoints.Movements;
 
@@ -21,7 +22,7 @@ internal sealed class UpdateMovementEndpoint : IEndpoint
         CancellationToken cancellationToken)
     {
         if (id != command.Id) 
-            return TypedResults.BadRequest();
+            return CustomResults.Problem(Error.Validation(Resource.Movement_Id_NotEmpty));
 
         var result = await mediator.SendAsync(command, cancellationToken);
 

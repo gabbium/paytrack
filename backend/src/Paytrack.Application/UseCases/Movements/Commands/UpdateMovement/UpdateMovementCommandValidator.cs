@@ -1,22 +1,23 @@
-﻿namespace Paytrack.Application.UseCases.Movements.Commands.UpdateMovement;
+﻿using Paytrack.Domain.Resources;
+
+namespace Paytrack.Application.UseCases.Movements.Commands.UpdateMovement;
 
 internal sealed class UpdateMovementCommandValidator : AbstractValidator<UpdateMovementCommand>
 {
     public UpdateMovementCommandValidator()
     {
         RuleFor(c => c.Id)
-            .NotEmpty();
-
-        RuleFor(c => c.Kind)
-            .IsInEnum();
+            .NotEmpty()
+            .WithMessage(Resource.Movement_Id_NotEmpty);
 
         RuleFor(c => c.Amount)
             .GreaterThan(0m)
-            .PrecisionScale(18, 2, true);
-
-        RuleFor(c => c.OccurredOn);
+            .WithMessage(string.Format(Resource.Movement_Amount_GreaterThan, 0))
+            .PrecisionScale(18, 2, true)
+            .WithMessage(string.Format(Resource.Movement_Amount_PrecisionScale, 18, 2));
 
         RuleFor(c => c.Description)
-            .MaximumLength(128);
+            .MaximumLength(128)
+            .WithMessage(string.Format(Resource.Movement_Description_MaxLength, 128));
     }
 }

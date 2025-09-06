@@ -1,8 +1,8 @@
 ﻿using Paytrack.Application.Common.Interfaces;
 using Paytrack.Application.UseCases.Users.Contracts;
 using Paytrack.Domain.Entities;
-using Paytrack.Domain.Errors;
 using Paytrack.Domain.Repositories;
+using Paytrack.Domain.Resources;
 
 namespace Paytrack.Application.UseCases.Users.Commands.RegisterUser;
 
@@ -18,7 +18,7 @@ internal sealed class RegisterUserCommandHandler(
         CancellationToken cancellationToken = default)
     {
         if (await userRepository.ExistsByEmailAsync(command.Email, cancellationToken))
-            return UserErrors.EmailAlreadyInUse;
+            return Error.Conflict(Resource.User_Email_AlreadyInUse);
 
         var passwordHash = passwordHasher.Hash(command.Password);
 

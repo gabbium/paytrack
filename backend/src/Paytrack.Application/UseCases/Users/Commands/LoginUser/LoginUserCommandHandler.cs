@@ -1,7 +1,7 @@
 ﻿using Paytrack.Application.Common.Interfaces;
 using Paytrack.Application.UseCases.Users.Contracts;
-using Paytrack.Domain.Errors;
 using Paytrack.Domain.Repositories;
+using Paytrack.Domain.Resources;
 
 namespace Paytrack.Application.UseCases.Users.Commands.LoginUser;
 
@@ -18,10 +18,10 @@ internal sealed class LoginUserCommandHandler(
         var user = await userRepository.GetByEmailAsync(command.Email, cancellationToken);
 
         if (user is null)
-            return UserErrors.InvalidCredentials;
+            return Error.Unauthorized(Resource.User_Login_InvalidCredentials);
 
         if (!passwordHasher.Verify(command.Password, user.PasswordHash))
-            return UserErrors.InvalidCredentials;
+            return Error.Unauthorized(Resource.User_Login_InvalidCredentials);
 
         var accessToken = tokenService.CreateAccessToken(user);
 

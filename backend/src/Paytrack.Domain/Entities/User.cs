@@ -1,4 +1,4 @@
-﻿using Paytrack.Domain.Errors;
+﻿using Paytrack.Domain.Resources;
 using Paytrack.Domain.ValueObjects;
 
 namespace Paytrack.Domain.Entities;
@@ -12,10 +12,10 @@ public sealed class User : BaseAuditableEntity
     public User(string email, string passwordHash)
     {
         if (string.IsNullOrEmpty(email))
-            throw new DomainException(UserErrors.EmptyEmail);
+            throw new DomainException(Error.Validation(Resource.User_Email_NotEmpty));
 
         if (string.IsNullOrEmpty(passwordHash))
-            throw new DomainException(UserErrors.EmptyPasswordHash);
+            throw new DomainException(Error.Validation(Resource.User_Password_NotEmpty));
 
         Email = email;
         PasswordHash = passwordHash;
@@ -25,10 +25,10 @@ public sealed class User : BaseAuditableEntity
     public void UpdatePreferences(string currency, string timeZone)
     {
         if (string.IsNullOrEmpty(currency))
-            throw new DomainException(UserErrors.EmptyCurrency);
+            throw new DomainException(Error.Validation(Resource.User_Currency_NotEmpty));
 
         if (string.IsNullOrEmpty(timeZone))
-            throw new DomainException(UserErrors.EmptyTimeZone);
+            throw new DomainException(Error.Validation(Resource.User_TimeZone_NotEmpty));
 
         Preferences = new UserPreferences(currency, timeZone);
     }

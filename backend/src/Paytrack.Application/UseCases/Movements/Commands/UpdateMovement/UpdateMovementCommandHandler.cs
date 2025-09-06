@@ -1,6 +1,6 @@
 ﻿using Paytrack.Application.UseCases.Movements.Contracts;
-using Paytrack.Domain.Errors;
 using Paytrack.Domain.Repositories;
+using Paytrack.Domain.Resources;
 
 namespace Paytrack.Application.UseCases.Movements.Commands.UpdateMovement;
 
@@ -16,7 +16,7 @@ internal sealed class UpdateMovementCommandHandler(
         var movement = await movementRepository.GetByIdAsync(command.Id, cancellationToken);
 
         if (movement is null)
-            return MovementErrors.NotFound;
+            return Error.NotFound(Resource.Movement_NotFound);
 
         movement.ChangeKind(command.Kind);
         movement.ChangeAmount(command.Amount);

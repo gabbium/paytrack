@@ -1,5 +1,5 @@
 ﻿using Paytrack.Domain.Enums;
-using Paytrack.Domain.Errors;
+using Paytrack.Domain.Resources;
 
 namespace Paytrack.Domain.Entities;
 
@@ -19,10 +19,10 @@ public sealed class Movement : BaseAuditableEntity
         DateTimeOffset occurredOn)
     {
         if (userId == Guid.Empty)
-            throw new DomainException(MovementErrors.EmptyUserId);
+            throw new DomainException(Error.Validation(Resource.Movement_UserId_NotEmpty));
 
         if (amount <= 0)
-            throw new DomainException(MovementErrors.InvalidAmount);
+            throw new DomainException(Error.Validation(string.Format(Resource.Movement_Amount_GreaterThan, 0)));
 
         UserId = userId;
         Kind = kind;
@@ -39,7 +39,7 @@ public sealed class Movement : BaseAuditableEntity
     public void ChangeAmount(decimal newAmount)
     {
         if (newAmount <= 0)
-            throw new DomainException(MovementErrors.InvalidAmount);
+            throw new DomainException(Error.Validation(string.Format(Resource.Movement_Amount_GreaterThan, 0)));
 
         Amount = newAmount;
     }

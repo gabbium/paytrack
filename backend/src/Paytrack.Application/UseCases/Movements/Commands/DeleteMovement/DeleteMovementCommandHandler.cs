@@ -1,5 +1,5 @@
-﻿using Paytrack.Domain.Errors;
-using Paytrack.Domain.Repositories;
+﻿using Paytrack.Domain.Repositories;
+using Paytrack.Domain.Resources;
 
 namespace Paytrack.Application.UseCases.Movements.Commands.DeleteMovement;
 
@@ -15,7 +15,7 @@ internal sealed class DeleteMovementCommandHandler(
         var movement = await movementRepository.GetByIdAsync(command.Id, cancellationToken);
 
         if (movement is null)
-            return MovementErrors.NotFound;
+            return Error.NotFound(Resource.Movement_NotFound);
 
         await movementRepository.RemoveAsync(movement, cancellationToken);
 

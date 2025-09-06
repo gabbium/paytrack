@@ -3,8 +3,6 @@ using Paytrack.Api.Infrastructure;
 using Paytrack.Application;
 using Paytrack.Infrastructure;
 
-ValidatorOptions.Global.LanguageManager.Enabled = false;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((_, config) =>
