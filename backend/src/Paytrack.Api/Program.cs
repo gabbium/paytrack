@@ -8,10 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((_, config) =>
 {
     config.ReadFrom.Configuration(builder.Configuration)
-       .Enrich.FromLogContext()
        .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder()
            .WithDefaultDestructurers()
-           .WithDestructurers([new DbUpdateExceptionDestructurer()]));
+           .WithDestructurers([new DbUpdateExceptionDestructurer()]))
+       .Destructure.With(new SensitiveDataDestructurer());
 });
 
 builder.Services.AddApplicationServices();
@@ -24,12 +24,12 @@ var app = builder.Build();
 
 app.UseMiddleware<RequestContextLoggingMiddleware>();
 
-app.UseExceptionHandler();
-
 app.UseSerilogRequestLogging(options =>
 {
     options.IncludeQueryInRequestPath = true;
 });
+
+app.UseExceptionHandler();
 
 app.UseOpenApi(settings =>
 {
@@ -45,7 +45,7 @@ app.UseSwaggerUi(settings =>
 app.MapHealthChecks("api/health", new HealthCheckOptions
 {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-});
+}).DisableHttpMetrics();
 
 app.Map("/", () => Results.Redirect("/api"));
 

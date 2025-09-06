@@ -2,7 +2,7 @@
 
 internal sealed class RequestContextLoggingMiddleware(RequestDelegate next)
 {
-    private const string CorrelationIdHeaderName = "Correlation-Id";
+    private const string CorrelationIdHeaderName = "X-Correlation-Id";
 
     public Task Invoke(HttpContext context)
     {

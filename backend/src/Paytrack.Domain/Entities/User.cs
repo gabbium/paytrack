@@ -1,9 +1,9 @@
-﻿using Paytrack.Domain.Exceptions;
+﻿using Paytrack.Domain.Errors;
 using Paytrack.Domain.ValueObjects;
 
 namespace Paytrack.Domain.Entities;
 
-public sealed class User : BaseAuditableEntity, IAggregateRoot
+public sealed class User : BaseAuditableEntity
 {
     public string Email { get; private set; }
     public string PasswordHash { get; private set; }
@@ -12,10 +12,10 @@ public sealed class User : BaseAuditableEntity, IAggregateRoot
     public User(string email, string passwordHash)
     {
         if (string.IsNullOrEmpty(email))
-            throw new DomainRuleViolation("Email is required", "The email cannot be empty or whitespace.");
+            throw new DomainException(UserErrors.EmptyEmail);
 
         if (string.IsNullOrEmpty(passwordHash))
-            throw new DomainRuleViolation("Password is required", "The password hash cannot be empty or whitespace.");
+            throw new DomainException(UserErrors.EmptyPasswordHash);
 
         Email = email;
         PasswordHash = passwordHash;
@@ -25,10 +25,10 @@ public sealed class User : BaseAuditableEntity, IAggregateRoot
     public void UpdatePreferences(string currency, string timeZone)
     {
         if (string.IsNullOrEmpty(currency))
-            throw new DomainRuleViolation("Currency is required", "The currency code cannot be empty or whitespace.");
+            throw new DomainException(UserErrors.EmptyCurrency);
 
         if (string.IsNullOrEmpty(timeZone))
-            throw new DomainRuleViolation("Time zone is required", "The time zone cannot be empty or whitespace.");
+            throw new DomainException(UserErrors.EmptyTimeZone);
 
         Preferences = new UserPreferences(currency, timeZone);
     }

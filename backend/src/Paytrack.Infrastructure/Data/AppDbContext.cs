@@ -5,7 +5,8 @@ namespace Paytrack.Infrastructure.Data;
 
 internal sealed class AppDbContext(
     DbContextOptions<AppDbContext> options,
-    ICurrentUser currentUser) : DbContext(options), IUnitOfWork
+    ICurrentUser currentUser) 
+    : DbContext(options), IUnitOfWork
 {
     private readonly Guid _currentUserId = currentUser.UserId;
 

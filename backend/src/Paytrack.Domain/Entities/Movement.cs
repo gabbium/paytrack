@@ -1,9 +1,9 @@
 ﻿using Paytrack.Domain.Enums;
-using Paytrack.Domain.Exceptions;
+using Paytrack.Domain.Errors;
 
 namespace Paytrack.Domain.Entities;
 
-public sealed class Movement : BaseAuditableEntity, IAggregateRoot
+public sealed class Movement : BaseAuditableEntity
 {
     public Guid UserId { get; private set; }
     public MovementKind Kind { get; private set; }
@@ -19,10 +19,10 @@ public sealed class Movement : BaseAuditableEntity, IAggregateRoot
         string? description = null)
     {
         if (userId == Guid.Empty)
-            throw new DomainRuleViolation("UserId is required", "The UserId cannot be empty.");
+            throw new DomainException(MovementErrors.EmptyUserId);
 
         if (amount <= 0)
-            throw new DomainRuleViolation("Invalid amount", "The amount must be greater than zero.");
+            throw new DomainException(MovementErrors.InvalidAmount);
 
         UserId = userId;
         Kind = kind;
@@ -39,7 +39,7 @@ public sealed class Movement : BaseAuditableEntity, IAggregateRoot
     public void ChangeAmount(decimal newAmount)
     {
         if (newAmount <= 0)
-            throw new DomainRuleViolation("Invalid amount", "The amount must be greater than zero.");
+            throw new DomainException(MovementErrors.InvalidAmount);
 
         Amount = newAmount;
     }

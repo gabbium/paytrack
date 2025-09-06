@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Paytrack.Domain\Paytrack.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UseCases\Users\Queries\" />
+  </ItemGroup>
+
 </Project>

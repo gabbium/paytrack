@@ -1,7 +1,10 @@
 ﻿using Paytrack.Application.Common.Interfaces;
 using Paytrack.Domain.Enums;
+using Paytrack.Domain.Repositories;
 using Paytrack.Infrastructure.Data;
 using Paytrack.Infrastructure.Data.Interceptors;
+using Paytrack.Infrastructure.Data.Repositories;
+using Paytrack.Infrastructure.Messaging;
 using Paytrack.Infrastructure.Security;
 
 namespace Paytrack.Infrastructure;
@@ -26,10 +29,11 @@ public static class DependencyInjection
 
         services.AddSingleton(TimeProvider.System);
 
+        services.AddScoped<IMediator, Mediator>();
+
         services.AddSingleton<IPasswordHasher, PasswordHasher>();
         services.AddSingleton<ITokenService, TokenService>();
 
-        services.AddScoped<ISender, Sender>();
-        services.AddScoped<IDomainEventPublisher, DomainEventPublisher>();
+        services.AddScoped<IUserRepository, UserRepository>();
     }
 }

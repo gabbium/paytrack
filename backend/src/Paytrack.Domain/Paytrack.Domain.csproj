@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Gabbium.CleanArch" Version="1.4.2" />
+    <PackageReference Include="Gabbium.CleanArch" Version="1.5.0" />
   </ItemGroup>
 
 </Project>
