@@ -31,4 +31,10 @@
     <ProjectReference Include="..\Paytrack.Infrastructure\Paytrack.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>Paytrack.Api.FunctionalTests</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
 </Project>

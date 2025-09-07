@@ -52,3 +52,10 @@ app.Map("/", () => Results.Redirect("/api"));
 app.MapEndpoints(Assembly.GetExecutingAssembly());
 
 await app.RunAsync();
+
+public partial class Program
+{
+    protected Program()
+    {
+    }
+}

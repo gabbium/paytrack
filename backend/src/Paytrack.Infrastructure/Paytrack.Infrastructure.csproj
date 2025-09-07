@@ -22,4 +22,10 @@
     <ProjectReference Include="..\Paytrack.Application\Paytrack.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>Paytrack.Api.FunctionalTests</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
 </Project>
