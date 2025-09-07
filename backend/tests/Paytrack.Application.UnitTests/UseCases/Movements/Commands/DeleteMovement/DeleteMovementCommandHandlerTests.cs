@@ -1,6 +1,5 @@
 ﻿using Paytrack.Application.UseCases.Movements.Commands.DeleteMovement;
 using Paytrack.Domain.Entities;
-using Paytrack.Domain.Enums;
 using Paytrack.Domain.Repositories;
 using Paytrack.Domain.Resources;
 
@@ -25,14 +24,8 @@ public class DeleteMovementCommandHandlerTests
     public async Task HandleAsync_WhenMovementExists_ThenRemovesAndReturnsSuccess()
     {
         // Arrange
-        var command = new DeleteMovementCommand(Guid.NewGuid());
-
-        var movement = new Movement(
-            Guid.NewGuid(),
-            MovementKind.Income,
-            123.45m,
-            "Salary",
-            DateTimeOffset.UtcNow);
+        var command = new DeleteMovementCommandBuilder().Build();
+        var movement = new MovementBuilder().Build();
 
         _movementRepositoryMock
             .Setup(r => r.GetByIdAsync(command.Id, It.IsAny<CancellationToken>()))
@@ -62,7 +55,7 @@ public class DeleteMovementCommandHandlerTests
     public async Task HandleAsync_WhenMovementNotFound_ThenReturnsNotFoundError()
     {
         // Arrange
-        var command = new DeleteMovementCommand(Guid.NewGuid());
+        var command = new DeleteMovementCommandBuilder().Build();
 
         _movementRepositoryMock
             .Setup(r => r.GetByIdAsync(command.Id, It.IsAny<CancellationToken>()))

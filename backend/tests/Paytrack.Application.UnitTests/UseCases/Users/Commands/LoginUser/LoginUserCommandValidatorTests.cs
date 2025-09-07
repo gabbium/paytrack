@@ -7,14 +7,11 @@ public class LoginUserCommandValidatorTests
 {
     private readonly LoginUserCommandValidator _validator = new();
 
-    private static LoginUserCommand CreateValidCommand() =>
-        new("user@example.com", "strongPassword123");
-
     [Fact]
     public void Validate_WhenCommandIsValid_ThenHasNoValidationErrors()
     {
         // Arrange
-        var command = CreateValidCommand();
+        var command = new LoginUserCommandBuilder().Build();
 
         // Act
         var result = _validator.TestValidate(command);
@@ -27,7 +24,9 @@ public class LoginUserCommandValidatorTests
     public void Validate_WhenEmailIsEmpty_ThenHasValidationError()
     {
         // Arrange
-        var command = CreateValidCommand() with { Email = string.Empty };
+        var command = new LoginUserCommandBuilder()
+            .WithEmail(string.Empty)
+            .Build();
 
         // Act
         var result = _validator.TestValidate(command);
@@ -41,7 +40,9 @@ public class LoginUserCommandValidatorTests
     public void Validate_WhenEmailIsInvalid_ThenHasValidationError()
     {
         // Arrange
-        var command = CreateValidCommand() with { Email = "invalid-email" };
+        var command = new LoginUserCommandBuilder()
+            .WithEmail("invalid-email")
+            .Build();
 
         // Act
         var result = _validator.TestValidate(command);
@@ -55,7 +56,9 @@ public class LoginUserCommandValidatorTests
     public void Validate_WhenEmailExceedsMaxLength_ThenHasValidationError()
     {
         // Arrange
-        var command = CreateValidCommand() with { Email = new string('a', 257) + "@test.com" };
+        var command = new LoginUserCommandBuilder()
+            .WithEmail(new string('a', 257) + "@test.com")
+            .Build();
 
         // Act
         var result = _validator.TestValidate(command);
@@ -69,7 +72,9 @@ public class LoginUserCommandValidatorTests
     public void Validate_WhenPasswordIsEmpty_ThenHasValidationError()
     {
         // Arrange
-        var command = CreateValidCommand() with { Password = string.Empty };
+        var command = new LoginUserCommandBuilder()
+            .WithPassword(string.Empty)
+            .Build();
 
         // Act
         var result = _validator.TestValidate(command);
@@ -83,7 +88,9 @@ public class LoginUserCommandValidatorTests
     public void Validate_WhenPasswordIsTooShort_ThenHasValidationError()
     {
         // Arrange
-        var command = CreateValidCommand() with { Password = "12345" };
+        var command = new LoginUserCommandBuilder()
+            .WithPassword("12345")
+            .Build();
 
         // Act
         var result = _validator.TestValidate(command);
@@ -97,7 +104,9 @@ public class LoginUserCommandValidatorTests
     public void Validate_WhenPasswordExceedsMaxLength_ThenHasValidationError()
     {
         // Arrange
-        var command = CreateValidCommand() with { Password = new string('x', 129) };
+        var command = new LoginUserCommandBuilder()
+            .WithPassword(new string('x', 129))
+            .Build();
 
         // Act
         var result = _validator.TestValidate(command);

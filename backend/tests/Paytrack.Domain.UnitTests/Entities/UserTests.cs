@@ -1,5 +1,4 @@
-﻿using Paytrack.Domain.Entities;
-using Paytrack.Domain.Resources;
+﻿using Paytrack.Domain.Resources;
 using Paytrack.Domain.ValueObjects;
 
 namespace Paytrack.Domain.UnitTests.Entities;
@@ -15,7 +14,10 @@ public class UserTests
         var defaultPreferences = UserPreferences.Default();
 
         // Act
-        var user = new User(email, passwordHash);
+        var user = new UserBuilder()
+            .WithEmail(email)
+            .WithPasswordHash(passwordHash)
+            .Build();
 
         // Assert
         user.ShouldSatisfyAllConditions(
@@ -28,7 +30,8 @@ public class UserTests
     public void Ctor_WhenEmailIsEmpty_ThenThrowsDomainException()
     {
         // Act & Assert
-        var ex = Should.Throw<DomainException>(() => new User(string.Empty, "strongPassword123"));
+        var ex = Should.Throw<DomainException>(() =>
+            new UserBuilder().WithEmail(string.Empty).Build());
 
         ex.Error.Type.ShouldBe(ErrorType.Validation);
         ex.Error.Description.ShouldBe(Resource.User_Email_NotEmpty);
@@ -38,7 +41,8 @@ public class UserTests
     public void Ctor_WhenPasswordHashIsEmpty_ThenThrowsDomainException()
     {
         // Act & Assert
-        var ex = Should.Throw<DomainException>(() => new User("user@example.com", string.Empty));
+        var ex = Should.Throw<DomainException>(() =>
+            new UserBuilder().WithPasswordHash(string.Empty).Build());
 
         ex.Error.Type.ShouldBe(ErrorType.Validation);
         ex.Error.Description.ShouldBe(Resource.User_Password_NotEmpty);
@@ -48,7 +52,7 @@ public class UserTests
     public void UpdatePreferences_UpdatesUserPreferences()
     {
         // Arrange
-        var user = new User("user@example.com", "strongPassword123");
+        var user = new UserBuilder().Build();
         var newCurrency = "EUR";
         var newTimeZone = "Europe/Berlin";
 
@@ -65,7 +69,7 @@ public class UserTests
     public void UpdatePreferences_WhenCurrencyIsEmpty_ThenThrowsDomainException()
     {
         // Arrange
-        var user = new User("user@example.com", "strongPassword123");
+        var user = new UserBuilder().Build();
 
         // Act & Assert
         var ex = Should.Throw<DomainException>(() => user.UpdatePreferences(string.Empty, "Europe/Berlin"));
@@ -78,7 +82,7 @@ public class UserTests
     public void UpdatePreferences_WhenTimeZoneIsEmpty_ThenThrowsDomainException()
     {
         // Arrange
-        var user = new User("user@example.com", "strongPassword123");
+        var user = new UserBuilder().Build();
 
         // Act & Assert
         var ex = Should.Throw<DomainException>(() => user.UpdatePreferences("EUR", string.Empty));

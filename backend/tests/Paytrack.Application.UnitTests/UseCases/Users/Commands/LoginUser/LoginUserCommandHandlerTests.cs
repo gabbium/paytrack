@@ -28,14 +28,10 @@ public class LoginUserCommandHandlerTests
     public async Task HandleAsync_WhenCredentialsAreValid_ThenReturnsSuccess()
     {
         // Arrange
-        var user = new User(
-            "user@example.com",
-            "hashed-password");
-
-        var command = new LoginUserCommand(
-            user.Email,
-            "plain-password");
-
+        var user = new UserBuilder().Build();
+        var command = new LoginUserCommandBuilder()
+            .WithEmail(user.Email)
+            .Build();
         var expectedToken = "jwt-token-123";
 
         _userRepositoryMock
@@ -77,9 +73,7 @@ public class LoginUserCommandHandlerTests
     public async Task HandleAsync_WhenUserDoesNotExist_ThenReturnsUnauthorized()
     {
         // Arrange
-        var command = new LoginUserCommand(
-            "user@example.com",
-            "plain-password");
+        var command = new LoginUserCommandBuilder().Build();
 
         _userRepositoryMock
             .Setup(r => r.GetByEmailAsync(command.Email, It.IsAny<CancellationToken>()))
@@ -108,13 +102,10 @@ public class LoginUserCommandHandlerTests
     public async Task HandleAsync_WhenPasswordIsInvalid_ThenReturnsUnauthorized()
     {
         // Arrange
-        var user = new User(
-            "user@example.com",
-            "hashed-password");
-
-        var command = new LoginUserCommand(
-            user.Email,
-            "plain-password");
+        var user = new UserBuilder().Build();
+        var command = new LoginUserCommandBuilder()
+            .WithEmail(user.Email)
+            .Build();
 
         _userRepositoryMock
             .Setup(r => r.GetByEmailAsync(command.Email, It.IsAny<CancellationToken>()))

@@ -1,5 +1,4 @@
 ﻿using Paytrack.Application.UseCases.Users.Contracts;
-using Paytrack.Domain.Entities;
 
 namespace Paytrack.Application.UnitTests.UseCases.Users.Contracts;
 
@@ -9,7 +8,7 @@ public class AuthResponseTests
     public void FromDomain_MapsAllPropertiesCorrectly()
     {
         // Arrange
-        var user = new User("user@example.com", "hashed-pass");
+        var user = new UserBuilder().Build();
         var expectedToken = "jwt-token-123";
 
         // Act

@@ -1,6 +1,4 @@
 ﻿using Paytrack.Application.UseCases.Movements.Contracts;
-using Paytrack.Domain.Entities;
-using Paytrack.Domain.Enums;
 
 namespace Paytrack.Application.UnitTests.UseCases.Movements.Contracts;
 
@@ -10,12 +8,7 @@ public class MovementResponseTests
     public void FromDomain_MapsAllPropertiesCorrectly()
     {
         // Arrange
-        var movement = new Movement(
-            Guid.NewGuid(),
-            MovementKind.Income,
-            123.45m,
-            "Salary",
-            DateTimeOffset.UtcNow);
+        var movement = new MovementBuilder().Build();
 
         // Act
         var response = MovementResponse.FromDomain(movement);

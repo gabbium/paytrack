@@ -1,7 +1,6 @@
 ﻿using Paytrack.Application.Common.Interfaces;
 using Paytrack.Application.UseCases.Movements.Commands.CreateMovement;
 using Paytrack.Domain.Entities;
-using Paytrack.Domain.Enums;
 using Paytrack.Domain.Repositories;
 
 namespace Paytrack.Application.UnitTests.UseCases.Movements.Commands.CreateMovement;
@@ -28,11 +27,7 @@ public class CreateMovementCommandHandlerTests
     public async Task HandleAsync_WhenValid_ThenPersistsAndReturnsSuccess()
     {
         // Arrange
-        var command = new CreateMovementCommand(
-            MovementKind.Income,
-            123.45m,
-            "Salary",
-            DateTimeOffset.UtcNow);
+        var command = new CreateMovementCommandBuilder().Build();
 
         _operationContextMock
             .SetupGet(o => o.UserIdOrEmpty)

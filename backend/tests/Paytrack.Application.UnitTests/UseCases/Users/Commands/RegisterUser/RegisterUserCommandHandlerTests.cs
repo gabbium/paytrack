@@ -3,7 +3,6 @@ using Paytrack.Application.UseCases.Users.Commands.RegisterUser;
 using Paytrack.Domain.Entities;
 using Paytrack.Domain.Repositories;
 using Paytrack.Domain.Resources;
-using Paytrack.Domain.ValueObjects;
 
 namespace Paytrack.Application.UnitTests.UseCases.Users.Commands.RegisterUser;
 
@@ -32,12 +31,8 @@ public class RegisterUserCommandHandlerTests
     public async Task HandleAsync_WhenEmailDoesNotExist_ThenCreatesUserAndReturnsSuccess()
     {
         // Arrange
-        var command = new RegisterUserCommand(
-            "user@example.com",
-            "plain-password");
-
+        var command = new RegisterUserCommandBuilder().Build();
         var hashedPassword = "hashed-password";
-
         var expectedToken = "jwt-token-123";
 
         _userRepositoryMock
@@ -87,9 +82,7 @@ public class RegisterUserCommandHandlerTests
     public async Task HandleAsync_WhenEmailAlreadyExists_ThenReturnsConflictError()
     {
         // Arrange
-        var command = new RegisterUserCommand(
-            "user@example.com",
-            "plain-password");
+        var command = new RegisterUserCommandBuilder().Build();
 
         _userRepositoryMock
             .Setup(r => r.ExistsByEmailAsync(command.Email, It.IsAny<CancellationToken>()))

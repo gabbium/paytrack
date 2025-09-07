@@ -7,14 +7,11 @@ public class DeleteMovementCommandValidatorTests
 {
     private readonly DeleteMovementCommandValidator _validator = new();
 
-    private static DeleteMovementCommand CreateValidCommand() =>
-        new(Guid.NewGuid());
-
     [Fact]
     public void Validate_WhenCommandIsValid_ThenHasNoValidationErrors()
     {
         // Arrange
-        var command = CreateValidCommand();
+        var command = new DeleteMovementCommandBuilder().Build();
 
         // Act
         var result = _validator.TestValidate(command);
@@ -27,7 +24,9 @@ public class DeleteMovementCommandValidatorTests
     public void Validate_WhenIdIsEmpty_ThenHasValidationError()
     {
         // Arrange
-        var command = new DeleteMovementCommand(Guid.Empty);
+        var command = new DeleteMovementCommandBuilder()
+            .WithId(Guid.Empty)
+            .Build();
 
         // Act
         var result = _validator.TestValidate(command);

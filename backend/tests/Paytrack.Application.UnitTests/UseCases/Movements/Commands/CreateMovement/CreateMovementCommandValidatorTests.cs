@@ -1,5 +1,4 @@
 ﻿using Paytrack.Application.UseCases.Movements.Commands.CreateMovement;
-using Paytrack.Domain.Enums;
 using Paytrack.Domain.Resources;
 
 namespace Paytrack.Application.UnitTests.UseCases.Movements.Commands.CreateMovement;
@@ -8,17 +7,11 @@ public class CreateMovementCommandValidatorTests
 {
     private readonly CreateMovementCommandValidator _validator = new();
 
-    private static CreateMovementCommand CreateValidCommand() =>
-        new(MovementKind.Income,
-            123.45m,
-            "Salary",
-            DateTimeOffset.UtcNow);
-
     [Fact]
     public void Validate_WhenCommandIsValid_ThenHasNoValidationErrors()
     {
         // Arrange
-        var command = CreateValidCommand();
+        var command = new CreateMovementCommandBuilder().Build();
 
         // Act
         var result = _validator.TestValidate(command);
@@ -33,7 +26,9 @@ public class CreateMovementCommandValidatorTests
     public void Validate_WhenAmountIsZeroOrNegative_ThenHasValidationError(decimal invalidAmount)
     {
         // Arrange
-        var command = CreateValidCommand() with { Amount = invalidAmount };
+        var command = new CreateMovementCommandBuilder()
+            .WithAmount(invalidAmount)
+            .Build();
 
         // Act
         var result = _validator.TestValidate(command);
@@ -47,7 +42,9 @@ public class CreateMovementCommandValidatorTests
     public void Validate_WhenAmountHasTooManyDecimals_ThenHasValidationError()
     {
         // Arrange
-        var command = CreateValidCommand() with { Amount = 1.999m };
+        var command = new CreateMovementCommandBuilder()
+            .WithAmount(1.999m)
+            .Build();
 
         // Act
         var result = _validator.TestValidate(command);
@@ -61,7 +58,9 @@ public class CreateMovementCommandValidatorTests
     public void Validate_WhenDescriptionExceedsMaxLength_ThenHasValidationError()
     {
         // Arrange
-        var command = CreateValidCommand() with { Description = new string('a', 129) };
+        var command = new CreateMovementCommandBuilder()
+            .WithDescription(new string('a', 129))
+            .Build();
 
         // Act
         var result = _validator.TestValidate(command);

@@ -1,6 +1,5 @@
 ﻿using Paytrack.Application.UseCases.Movements.Queries.GetMovementById;
 using Paytrack.Domain.Entities;
-using Paytrack.Domain.Enums;
 using Paytrack.Domain.Repositories;
 using Paytrack.Domain.Resources;
 
@@ -22,14 +21,8 @@ public class GetMovementByIdQueryHandlerTests
     public async Task HandleAsync_WhenMovementExists_ThenReturnsSuccess()
     {
         // Arrange
-        var query = new GetMovementByIdQuery(Guid.NewGuid());
-
-        var movement = new Movement(
-            Guid.NewGuid(),
-            MovementKind.Income,
-            123.45m,
-            "Salary",
-            DateTimeOffset.UtcNow);
+        var query = new GetMovementByIdQueryBuilder().Build();
+        var movement = new MovementBuilder().Build();
 
         _movementRepositoryMock
             .Setup(r => r.GetByIdAsync(query.Id, It.IsAny<CancellationToken>()))
@@ -52,7 +45,7 @@ public class GetMovementByIdQueryHandlerTests
     public async Task HandleAsync_WhenMovementNotFound_ThenReturnsNotFoundError()
     {
         // Arrange
-        var query = new GetMovementByIdQuery(Guid.NewGuid());
+        var query = new GetMovementByIdQueryBuilder().Build();
 
         _movementRepositoryMock
             .Setup(r => r.GetByIdAsync(query.Id, It.IsAny<CancellationToken>()))

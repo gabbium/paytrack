@@ -1,5 +1,4 @@
-﻿using Paytrack.Domain.Entities;
-using Paytrack.Domain.Enums;
+﻿using Paytrack.Domain.Enums;
 using Paytrack.Domain.Resources;
 
 namespace Paytrack.Domain.UnitTests.Entities;
@@ -17,7 +16,13 @@ public class MovementTests
         var occurredOn = DateTimeOffset.UtcNow;
 
         // Act
-        var movement = new Movement(userId, kind, amount, description, occurredOn);
+        var movement = new MovementBuilder()
+            .WithUserId(userId)
+            .WithKind(kind)
+            .WithAmount(amount)
+            .WithDescription(description)
+            .WithOccurredOn(occurredOn)
+            .Build();
 
         // Assert
         movement.ShouldSatisfyAllConditions(
@@ -33,7 +38,7 @@ public class MovementTests
     {
         // Act & Assert
         var ex = Should.Throw<DomainException>(() =>
-            new Movement(Guid.Empty, MovementKind.Income, 123.45m, "Salary", DateTimeOffset.UtcNow));
+            new MovementBuilder().WithUserId(Guid.Empty).Build());
 
         ex.Error.Type.ShouldBe(ErrorType.Validation);
         ex.Error.Description.ShouldBe(Resource.Movement_UserId_NotEmpty);
@@ -46,7 +51,7 @@ public class MovementTests
     {
         // Act & Assert
         var ex = Should.Throw<DomainException>(() =>
-            new Movement(Guid.NewGuid(), MovementKind.Income, invalidAmount, "Salary", DateTimeOffset.UtcNow));
+            new MovementBuilder().WithAmount(invalidAmount).Build());
 
         ex.Error.Type.ShouldBe(ErrorType.Validation);
         ex.Error.Description.ShouldBe(string.Format(Resource.Movement_Amount_GreaterThan, 0));
@@ -56,7 +61,7 @@ public class MovementTests
     public void ChangeKind_UpdatesKind()
     {
         // Arrange
-        var movement = new Movement(Guid.NewGuid(), MovementKind.Income, 123.45m, "Salary", DateTimeOffset.UtcNow);
+        var movement = new MovementBuilder().WithKind(MovementKind.Income).Build();
 
         // Act
         movement.ChangeKind(MovementKind.Expense);
@@ -69,7 +74,7 @@ public class MovementTests
     public void ChangeAmount_WhenValid_ThenUpdatesAmount()
     {
         // Arrange
-        var movement = new Movement(Guid.NewGuid(), MovementKind.Income, 123.45m, "Salary", DateTimeOffset.UtcNow);
+        var movement = new MovementBuilder().WithAmount(100m).Build();
 
         // Act
         movement.ChangeAmount(200m);
@@ -84,7 +89,7 @@ public class MovementTests
     public void ChangeAmount_WhenZeroOrNegative_ThenThrowsDomainException(decimal invalidAmount)
     {
         // Arrange
-        var movement = new Movement(Guid.NewGuid(), MovementKind.Income, 123.45m, "Salary", DateTimeOffset.UtcNow);
+        var movement = new MovementBuilder().Build();
 
         // Act & Assert
         var ex = Should.Throw<DomainException>(() => movement.ChangeAmount(invalidAmount));
@@ -97,20 +102,20 @@ public class MovementTests
     public void ChangeDescription_UpdatesDescription()
     {
         // Arrange
-        var movement = new Movement(Guid.NewGuid(), MovementKind.Income, 123.45m, "Salary", DateTimeOffset.UtcNow);
+        var movement = new MovementBuilder().WithDescription("Test movement").Build();
 
         // Act
-        movement.ChangeDescription("Bonus");
+        movement.ChangeDescription("Test movement updated");
 
         // Assert
-        movement.Description.ShouldBe("Bonus");
+        movement.Description.ShouldBe("Test movement updated");
     }
 
     [Fact]
     public void ChangeOccurredOn_UpdatesDate()
     {
         // Arrange
-        var movement = new Movement(Guid.NewGuid(), MovementKind.Income, 123.45m, "Salary", DateTimeOffset.UtcNow);
+        var movement = new MovementBuilder().WithOccurredOn(DateTimeOffset.UtcNow).Build();
         var newDate = DateTimeOffset.UtcNow.AddDays(-1);
 
         // Act

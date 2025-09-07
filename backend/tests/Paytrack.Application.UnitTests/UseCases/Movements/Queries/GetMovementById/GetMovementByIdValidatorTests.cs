@@ -7,14 +7,11 @@ public class GetMovementByIdValidatorTests
 {
     private readonly GetMovementByIdValidator _validator = new();
 
-    private static GetMovementByIdQuery CreateValidQuery() =>
-        new(Guid.NewGuid());
-
     [Fact]
     public void Validate_WhenQueryIsValid_ThenHasNoValidationErrors()
     {
         // Arrange
-        var query = CreateValidQuery();
+        var query = new GetMovementByIdQueryBuilder().Build();
 
         // Act
         var result = _validator.TestValidate(query);
@@ -27,7 +24,9 @@ public class GetMovementByIdValidatorTests
     public void Validate_WhenIdIsEmpty_ThenHasValidationError()
     {
         // Arrange
-        var query = new GetMovementByIdQuery(Guid.Empty);
+        var query = new GetMovementByIdQueryBuilder()
+            .WithId(Guid.Empty)
+            .Build();
 
         // Act
         var result = _validator.TestValidate(query);

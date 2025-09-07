@@ -1,5 +1,4 @@
-﻿using Paytrack.Domain.Entities;
-using Paytrack.Domain.Events;
+﻿using Paytrack.Domain.Events;
 
 namespace Paytrack.Domain.UnitTests.Events;
 
@@ -9,7 +8,7 @@ public class UserRegisteredEventTests
     public void FromDomain_MapsAllPropertiesCorrectly()
     {
         // Arrange
-        var user = new User("user@example.com", "strongPassword123");
+        var user = new UserBuilder().Build();
 
         // Act
         var @event = UserRegisteredEvent.FromDomain(user);

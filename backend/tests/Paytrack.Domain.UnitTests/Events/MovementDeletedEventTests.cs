@@ -1,6 +1,4 @@
-﻿using Paytrack.Domain.Entities;
-using Paytrack.Domain.Enums;
-using Paytrack.Domain.Events;
+﻿using Paytrack.Domain.Events;
 
 namespace Paytrack.Domain.UnitTests.Events;
 
@@ -10,12 +8,7 @@ public class MovementDeletedEventTests
     public void FromDomain_MapsAllPropertiesCorrectly()
     {
         // Arrange
-        var movement = new Movement(
-            Guid.NewGuid(),
-            MovementKind.Income,
-            123.45m,
-            "Salary",
-            DateTimeOffset.UtcNow);
+        var movement = new MovementBuilder().Build();
 
         // Act
         var @event = MovementDeletedEvent.FromDomain(movement);

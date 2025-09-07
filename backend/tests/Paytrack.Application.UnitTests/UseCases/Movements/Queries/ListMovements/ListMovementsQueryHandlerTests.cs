@@ -19,8 +19,7 @@ public class ListMovementsQueryHandlerTests
     public async Task HandleAsync_ReturnsSuccess()
     {
         // Arrange
-        var query = new ListMovementsQuery(1, 10);
-
+        var query = new ListMovementsQueryBuilder().Build();
         var paginatedList = new PaginatedList<MovementResponse>(
             [],
             100,

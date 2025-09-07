@@ -1,6 +1,5 @@
 ﻿using Paytrack.Application.UseCases.Movements.Commands.UpdateMovement;
 using Paytrack.Domain.Entities;
-using Paytrack.Domain.Enums;
 using Paytrack.Domain.Repositories;
 using Paytrack.Domain.Resources;
 
@@ -25,19 +24,8 @@ public class UpdateMovementCommandHandlerTests
     public async Task HandleAsync_WhenMovementExists_ThenUpdatesAndReturnsSuccess()
     {
         // Arrange
-        var command = new UpdateMovementCommand(
-            Guid.NewGuid(),
-            MovementKind.Expense,
-            200m,
-            "Bonus",
-            DateTimeOffset.UtcNow.AddDays(1));
-
-        var movement = new Movement(
-            Guid.NewGuid(),
-            MovementKind.Income,
-            123.45m,
-            "Salary",
-            DateTimeOffset.UtcNow);
+        var command = new UpdateMovementCommandBuilder().Build();
+        var movement = new MovementBuilder().Build();
 
         _movementRepositoryMock
             .Setup(r => r.GetByIdAsync(command.Id, It.IsAny<CancellationToken>()))
@@ -68,12 +56,7 @@ public class UpdateMovementCommandHandlerTests
     public async Task HandleAsync_WhenMovementNotFound_ThenReturnsNotFoundError()
     {
         // Arrange
-        var command = new UpdateMovementCommand(
-            Guid.NewGuid(),
-            MovementKind.Expense,
-            200m,
-            "Bonus",
-            DateTimeOffset.UtcNow.AddDays(1));
+        var command = new UpdateMovementCommandBuilder().Build();
 
         _movementRepositoryMock
             .Setup(r => r.GetByIdAsync(command.Id, It.IsAny<CancellationToken>()))
