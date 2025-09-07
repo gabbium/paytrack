@@ -6,6 +6,6 @@ namespace Paytrack.Application.UseCases.Movements.Commands.CreateMovement;
 public sealed record CreateMovementCommand(
     MovementKind Kind,
     decimal Amount,
-    DateTimeOffset OccurredOn,
-    string? Description)
+    string? Description,
+    DateTimeOffset OccurredOn)
     : ICommand<MovementResponse>;

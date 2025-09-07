@@ -3,13 +3,13 @@
 namespace Paytrack.Domain.Events;
 
 public sealed class UserRegisteredEvent(
-    Guid userId,
+    Guid id,
     string email,
     string currency,
     string timeZone)
     : DomainEventBase
 {
-    public Guid UserId { get; } = userId;
+    public Guid Id { get; } = id;
     public string Email { get; } = email;
     public string Currency { get; } = currency;
     public string TimeZone { get; } = timeZone;

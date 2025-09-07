@@ -7,6 +7,6 @@ public sealed record UpdateMovementCommand(
     Guid Id,
     MovementKind Kind,
     decimal Amount,
-    DateTimeOffset OccurredOn,
-    string? Description)
+    string? Description,
+    DateTimeOffset OccurredOn)
     : ICommand<MovementResponse>;
