@@ -1,13 +1,11 @@
 ﻿namespace Paytrack.Api.FunctionalTests.Infrastructure.Support;
 
 [Collection(FunctionalTestsCollection.Name)]
-public abstract class TestBase(TestFixture fixture) : IAsyncLifetime
+public abstract class TestBase(TestFixture fx) : IAsyncLifetime
 {
-    protected readonly TestFixture Fixture = fixture;
-
     public async Task InitializeAsync()
     {
-        await Fixture.ResetStateAsync();
+        await fx.ResetStateAsync();
     }
 
     public Task DisposeAsync()
