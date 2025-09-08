@@ -16,7 +16,7 @@ internal sealed class LoginUserEndpoint : IEndpoint
            .ProducesProblem(StatusCodes.Status401Unauthorized);
     }
 
-    public static async Task<IResult> HandleAsync(
+    public async Task<IResult> HandleAsync(
         IMediator mediator,
         LoginUserCommand command,
         CancellationToken cancellationToken)

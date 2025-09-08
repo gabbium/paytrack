@@ -16,7 +16,7 @@ internal sealed class GetMovementByIdEndpoint : IEndpoint
            .Produces(StatusCodes.Status401Unauthorized)
            .ProducesProblem(StatusCodes.Status404NotFound);
     }
-    public static async Task<IResult> HandleAsync(
+    public async Task<IResult> HandleAsync(
         IMediator mediator,
         Guid id,
         CancellationToken cancellationToken)

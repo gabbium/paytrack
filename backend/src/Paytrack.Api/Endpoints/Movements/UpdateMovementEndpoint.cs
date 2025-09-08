@@ -18,7 +18,7 @@ internal sealed class UpdateMovementEndpoint : IEndpoint
            .ProducesProblem(StatusCodes.Status404NotFound);
     }
 
-    public static async Task<IResult> HandleAsync(
+    public async Task<IResult> HandleAsync(
         IMediator mediator,
         Guid id,
         UpdateMovementCommand command,
