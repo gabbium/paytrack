@@ -42,12 +42,10 @@ internal sealed class OutboxInterceptor(
         foreach (var entity in entities)
             entity.ClearDomainEvents();
 
-        var headers = new
-        {
-            userId = operationContext.UserId,
-            correlationId = operationContext.CorrelationId,
-            source = "paytrack.api"
-        };
+        var headers = new OutboxHeaders(
+            operationContext.UserId,
+            operationContext.CorrelationId,
+            "paytrack.api");
 
         var outboxMessages = domainEvents.Select(de =>
             new OutboxMessage(
