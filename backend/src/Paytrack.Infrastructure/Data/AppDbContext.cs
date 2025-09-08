@@ -4,7 +4,7 @@ using Paytrack.Infrastructure.Data.Outbox;
 
 namespace Paytrack.Infrastructure.Data;
 
-internal sealed class AppDbContext(
+public sealed class AppDbContext(
     DbContextOptions<AppDbContext> options,
     IOperationContext operationContext)
     : DbContext(options), IUnitOfWork
