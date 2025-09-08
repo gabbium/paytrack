@@ -11,7 +11,10 @@ internal sealed class GetMovementByIdEndpoint : IEndpoint
            .WithName(nameof(GetMovementByIdEndpoint))
            .WithTags(Tags.Movements)
            .RequireAuthorization()
-           .Produces<MovementResponse>(StatusCodes.Status200OK);
+           .Produces<MovementResponse>(StatusCodes.Status200OK)
+           .ProducesValidationProblem(StatusCodes.Status400BadRequest)
+           .Produces(StatusCodes.Status401Unauthorized)
+           .ProducesProblem(StatusCodes.Status404NotFound);
     }
     public static async Task<IResult> HandleAsync(
         IMediator mediator,

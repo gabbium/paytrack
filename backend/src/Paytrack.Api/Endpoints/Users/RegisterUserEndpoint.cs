@@ -11,7 +11,9 @@ internal sealed class RegisterUserEndpoint : IEndpoint
            .WithName(nameof(RegisterUserEndpoint))
            .WithTags(Tags.Users)
            .AllowAnonymous()
-           .Produces<AuthResponse>(StatusCodes.Status200OK);
+           .Produces<AuthResponse>(StatusCodes.Status200OK)
+           .ProducesValidationProblem(StatusCodes.Status400BadRequest)
+           .ProducesProblem(StatusCodes.Status409Conflict);
     }
 
     public static async Task<IResult> HandleAsync(

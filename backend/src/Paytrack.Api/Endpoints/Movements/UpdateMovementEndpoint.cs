@@ -12,7 +12,10 @@ internal sealed class UpdateMovementEndpoint : IEndpoint
            .WithName(nameof(UpdateMovementEndpoint))
            .WithTags(Tags.Movements)
            .RequireAuthorization()
-           .Produces<MovementResponse>(StatusCodes.Status200OK);
+           .Produces<MovementResponse>(StatusCodes.Status200OK)
+           .ProducesValidationProblem(StatusCodes.Status400BadRequest)
+           .Produces(StatusCodes.Status401Unauthorized)
+           .ProducesProblem(StatusCodes.Status404NotFound);
     }
 
     public static async Task<IResult> HandleAsync(

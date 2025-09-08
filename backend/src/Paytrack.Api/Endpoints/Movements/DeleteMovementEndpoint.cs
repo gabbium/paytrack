@@ -10,7 +10,10 @@ internal sealed class DeleteMovementEndpoint : IEndpoint
            .WithName(nameof(DeleteMovementEndpoint))
            .WithTags(Tags.Movements)
            .RequireAuthorization()
-           .Produces(StatusCodes.Status204NoContent);
+           .Produces(StatusCodes.Status204NoContent)
+           .ProducesValidationProblem(StatusCodes.Status400BadRequest)
+           .Produces(StatusCodes.Status401Unauthorized)
+           .ProducesProblem(StatusCodes.Status404NotFound);
     }
     public static async Task<IResult> HandleAsync(
         IMediator mediator,

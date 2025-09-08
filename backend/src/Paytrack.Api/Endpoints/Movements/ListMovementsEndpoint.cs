@@ -11,7 +11,9 @@ internal sealed class ListMovementsEndpoint : IEndpoint
            .WithName(nameof(ListMovementsEndpoint))
            .WithTags(Tags.Movements)
            .RequireAuthorization()
-           .Produces<PaginatedList<MovementResponse>>(StatusCodes.Status200OK);
+           .Produces<PaginatedList<MovementResponse>>(StatusCodes.Status200OK)
+           .ProducesValidationProblem(StatusCodes.Status400BadRequest)
+           .Produces(StatusCodes.Status401Unauthorized);
     }
     public static async Task<IResult> HandleAsync(
         IMediator mediator,

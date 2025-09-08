@@ -11,7 +11,9 @@ internal sealed class CreateMovementEndpoint : IEndpoint
            .WithName(nameof(CreateMovementEndpoint))
            .WithTags(Tags.Movements)
            .RequireAuthorization()
-           .Produces<MovementResponse>(StatusCodes.Status201Created);
+           .Produces<MovementResponse>(StatusCodes.Status201Created)
+           .ProducesValidationProblem(StatusCodes.Status400BadRequest)
+           .Produces(StatusCodes.Status401Unauthorized);
     }
 
     public static async Task<IResult> HandleAsync(
