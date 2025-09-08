@@ -94,7 +94,7 @@ It follows clean architecture principles with a clear separation of concerns and
 
 ### ⚙️ Architecture
 
-- **Messaging pattern** with Commands, Queries, and Events
+- **Messaging pattern** with **Commands**, **Queries**, and **Events**
 - **Pipeline behaviors** (logging, validation with `AbstractValidator`)
 - **Result pattern** for consistent success/error handling
 - **Minimal API** endpoints
@@ -115,6 +115,25 @@ The local environment is provisioned via **Docker Compose** and includes the ser
 - **PostgreSQL** — database; credentials are read from the local **`.env`** file.
 - **Seq** — centralized log server for **Serilog**.
 - **Portainer** — lightweight UI for container management.
+
+---
+
+## 🗺️ Roadmap
+
+- **v1.1**
+
+  - **Worker** publishing **Outbox → RabbitMQ**
+  - Additional filtering/sorting (e.g., by **Kind** and **Amount**)
+
+- **v1.2**
+
+  - **Summaries**: simple aggregates by **month** and by **kind**
+  - **Notifications/alerts** handled by an **event consumer**
+
+- **v2**
+  - **RLS + GUC** in PostgreSQL (stronger data security)
+  - **Categories** and **budgets**
+  - **Telegram bot** (webhook → command → persistence/event)
 
 ---
 
