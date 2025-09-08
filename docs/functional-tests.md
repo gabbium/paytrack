@@ -1,4 +1,4 @@
-# Functional Testing Guidelines (Updated)
+# Functional Testing Guidelines
 
 This document reflects the **exact testing style** used in Paytrack’s functional tests.
 
