@@ -1,4 +1,4 @@
-# Unit Testing Guidelines (Updated)
+# Unit Testing Guidelines
 
 This document reflects the **exact testing style** used in Paytrack’s unit tests.
 
