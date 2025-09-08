@@ -27,7 +27,7 @@ internal sealed class OperationContextMiddleware(RequestDelegate next)
         }
     }
 
-    private string GetCorrelationId(HttpContext context)
+    private static string GetCorrelationId(HttpContext context)
     {
         context.Request.Headers.TryGetValue(
             CorrelationIdHeader,
@@ -36,12 +36,12 @@ internal sealed class OperationContextMiddleware(RequestDelegate next)
         return correlationId.FirstOrDefault() ?? context.TraceIdentifier;
     }
 
-    private bool GetIsAuthenticated(HttpContext context)
+    private static bool GetIsAuthenticated(HttpContext context)
     {
         return context.User?.Identity?.IsAuthenticated == true;
     }
 
-    private Guid? GetUserId(HttpContext context)
+    private static Guid? GetUserId(HttpContext context)
     {
         var value = context.User?.FindFirstValue(ClaimTypes.NameIdentifier);
         return Guid.TryParse(value, out var userId) ? userId : null;

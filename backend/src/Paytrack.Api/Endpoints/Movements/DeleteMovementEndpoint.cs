@@ -15,7 +15,7 @@ internal sealed class DeleteMovementEndpoint : IEndpoint
            .Produces(StatusCodes.Status401Unauthorized)
            .ProducesProblem(StatusCodes.Status404NotFound);
     }
-    public async Task<IResult> HandleAsync(
+    public static async Task<IResult> HandleAsync(
         IMediator mediator,
         Guid id,
         CancellationToken cancellationToken)

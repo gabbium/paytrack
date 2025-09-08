@@ -16,7 +16,7 @@ internal sealed class CreateMovementEndpoint : IEndpoint
            .Produces(StatusCodes.Status401Unauthorized);
     }
 
-    public async Task<IResult> HandleAsync(
+    public static async Task<IResult> HandleAsync(
         IMediator mediator,
         CreateMovementCommand command,
         CancellationToken cancellationToken)

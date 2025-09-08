@@ -15,7 +15,7 @@ internal sealed class ListMovementsEndpoint : IEndpoint
            .ProducesValidationProblem(StatusCodes.Status400BadRequest)
            .Produces(StatusCodes.Status401Unauthorized);
     }
-    public async Task<IResult> HandleAsync(
+    public static async Task<IResult> HandleAsync(
         IMediator mediator,
         [AsParameters] ListMovementsQuery query,
         CancellationToken cancellationToken)

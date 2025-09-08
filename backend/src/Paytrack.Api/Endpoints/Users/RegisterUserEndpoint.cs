@@ -16,7 +16,7 @@ internal sealed class RegisterUserEndpoint : IEndpoint
            .ProducesProblem(StatusCodes.Status409Conflict);
     }
 
-    public async Task<IResult> HandleAsync(
+    public static async Task<IResult> HandleAsync(
         IMediator mediator,
         RegisterUserCommand command,
         CancellationToken cancellationToken)
